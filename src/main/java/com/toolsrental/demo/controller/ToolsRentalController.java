@@ -38,7 +38,9 @@ public class ToolsRentalController {
         //with formatting as follows:
         // Date mm/dd/yy
         // Currency $9,999.99
-        // Percent 99% 
+        // Percent 99%
+
+        //// TODO: 28/03/24 Junits to pass Six Test cases provided  
     }
 
 }
