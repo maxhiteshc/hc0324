@@ -53,7 +53,7 @@ public class ToolsRentalControllerTest {
 
     @Test
     public void test2() throws Exception {
-        ClassPathResource testFile = new ClassPathResource("mockJson/test1.json");
+        ClassPathResource testFile = new ClassPathResource("mockJson/test2.json");
         String checkoutRequest = StreamUtils.copyToString( testFile.getInputStream(), Charset.defaultCharset()  );
         ToolsRentalRequestDTO toolsRentalRequestDTO = objectMapper.readValue(checkoutRequest, ToolsRentalRequestDTO.class);
         mockMvc.perform(post("/v1/checkout")
@@ -65,7 +65,7 @@ public class ToolsRentalControllerTest {
 
     @Test
     public void test3() throws Exception {
-        ClassPathResource testFile = new ClassPathResource("mockJson/test1.json");
+        ClassPathResource testFile = new ClassPathResource("mockJson/test3.json");
         String checkoutRequest = StreamUtils.copyToString( testFile.getInputStream(), Charset.defaultCharset()  );
         ToolsRentalRequestDTO toolsRentalRequestDTO = objectMapper.readValue(checkoutRequest, ToolsRentalRequestDTO.class);
         mockMvc.perform(post("/v1/checkout")
@@ -77,7 +77,7 @@ public class ToolsRentalControllerTest {
 
     @Test
     public void test4() throws Exception {
-        ClassPathResource testFile = new ClassPathResource("mockJson/test1.json");
+        ClassPathResource testFile = new ClassPathResource("mockJson/test4.json");
         String checkoutRequest = StreamUtils.copyToString( testFile.getInputStream(), Charset.defaultCharset()  );
         ToolsRentalRequestDTO toolsRentalRequestDTO = objectMapper.readValue(checkoutRequest, ToolsRentalRequestDTO.class);
         mockMvc.perform(post("/v1/checkout")
@@ -89,7 +89,7 @@ public class ToolsRentalControllerTest {
 
     @Test
     public void test5() throws Exception {
-        ClassPathResource testFile = new ClassPathResource("mockJson/test1.json");
+        ClassPathResource testFile = new ClassPathResource("mockJson/test5.json");
         String checkoutRequest = StreamUtils.copyToString( testFile.getInputStream(), Charset.defaultCharset()  );
         ToolsRentalRequestDTO toolsRentalRequestDTO = objectMapper.readValue(checkoutRequest, ToolsRentalRequestDTO.class);
         mockMvc.perform(post("/v1/checkout")
@@ -101,7 +101,7 @@ public class ToolsRentalControllerTest {
 
     @Test
     public void test6() throws Exception {
-        ClassPathResource testFile = new ClassPathResource("mockJson/test1.json");
+        ClassPathResource testFile = new ClassPathResource("mockJson/test6.json");
         String checkoutRequest = StreamUtils.copyToString( testFile.getInputStream(), Charset.defaultCharset()  );
         ToolsRentalRequestDTO toolsRentalRequestDTO = objectMapper.readValue(checkoutRequest, ToolsRentalRequestDTO.class);
         mockMvc.perform(post("/v1/checkout")
