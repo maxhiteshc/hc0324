@@ -41,13 +41,11 @@ public class ToolsRentalServiceImpl implements ToolsRentalService {
         toolsRentalResponseDTO.setDiscountPercent(discountPercent);
 
         //// TODO: 28/03/24 Round it to cents
-        double discountAmount = (discountPercent/100)* preDiscountCharge;
+        double discountAmount = (discountPercent*preDiscountCharge)/100;
         toolsRentalResponseDTO.setDiscountAmount(discountAmount);
 
         double finalCharge = preDiscountCharge - discountAmount;
         toolsRentalResponseDTO.setFinalCharge(finalCharge);
-
-        // TODO: 28/03/24 Generate and calculate Response values using request
 
         return toolsRentalResponseDTO;
     }

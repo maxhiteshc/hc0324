@@ -26,21 +26,30 @@ public class ToolsRentalController {
 
     @PostMapping
     public ResponseEntity<ToolsRentalResponseDTO> getAllProducts(ToolsRentalRequestDTO toolsRentalRequestDTO) throws URISyntaxException {
-        return ResponseEntity.ok(toolsRentalService.checkout(toolsRentalRequestDTO));
-        
-        //// TODO: 28/03/24 Rental Agreement should include a method that can print the above values as text to the console
-        //like
-        //this:
-        //Tool code: LADW
-        //Tool type: Ladder
-        //…
-        //Final charge: $9.99
-        //with formatting as follows:
-        // Date mm/dd/yy
-        // Currency $9,999.99
-        // Percent 99%
+        ToolsRentalResponseDTO toolsRentalResponseDTO = toolsRentalService.checkout(toolsRentalRequestDTO));
+        printRentalAgreement(toolsRentalResponseDTO);
+        return ResponseEntity.ok(toolsRentalResponseDTO);
 
-        //// TODO: 28/03/24 Junits to pass Six Test cases provided  
+        //// TODO: 28/03/24 Junits to pass Six Test cases provided
+    }
+
+    private void printRentalAgreement(ToolsRentalResponseDTO toolsRentalResponseDTO) {
+        String newLine = System.getProperty("line.separator");
+        String currency = "$";
+        String percent = "%";
+        //todo Format dates to // Date mm/dd/yy
+        System.out.println("Tool code: " + toolsRentalResponseDTO.getToolCode() + newLine +
+                        "Tool type: " + toolsRentalResponseDTO.getToolType() + newLine +
+                        "Tool brand: " + toolsRentalResponseDTO.getToolBrand() + newLine +
+                        "Rental days: " + toolsRentalResponseDTO.getRentalDaysCount() + newLine +
+                        "Check out date: " + toolsRentalResponseDTO.getCheckoutDate() + newLine +
+                        "Due date: " + toolsRentalResponseDTO.getDueDate() + newLine +
+                        "Daily rental charge: " + currency + toolsRentalResponseDTO.getDailyRentalCharge() + newLine +
+                        "Charge days: " + toolsRentalResponseDTO.getChargeDays() + newLine +
+                        "Pre-discount charge: " + currency + toolsRentalResponseDTO.getPreDiscountCharge() + newLine +
+                        "Discount percent: " + toolsRentalResponseDTO.getDiscountPercent() + percent + newLine +
+                        "Discount amount: " + currency + toolsRentalResponseDTO.getDiscountAmount() + newLine +
+                        "Final charge: " + currency + toolsRentalResponseDTO.getFinalCharge());
     }
 
 }
