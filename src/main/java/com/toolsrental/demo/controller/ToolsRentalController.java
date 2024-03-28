@@ -26,19 +26,19 @@ public class ToolsRentalController {
 
     @PostMapping
     public ResponseEntity<ToolsRentalResponseDTO> getAllProducts(ToolsRentalRequestDTO toolsRentalRequestDTO) throws URISyntaxException {
-        //// TODO: 28/03/24 Add validations on request parameters 
+        // TODO: 28/03/24 Add validations on request parameters
         ToolsRentalResponseDTO toolsRentalResponseDTO = toolsRentalService.checkout(toolsRentalRequestDTO));
         printRentalAgreement(toolsRentalResponseDTO);
         return ResponseEntity.ok(toolsRentalResponseDTO);
 
-        //// TODO: 28/03/24 Junits to pass Six Test cases provided
+        // TODO: 28/03/24 Junits to pass Six Test cases provided
     }
 
     private void printRentalAgreement(ToolsRentalResponseDTO toolsRentalResponseDTO) {
         String newLine = System.getProperty("line.separator");
         String currency = "$";
         String percent = "%";
-        //todo Format dates to // Date mm/dd/yy
+        // TODO: 28/03/24  Format dates to // Date mm/dd/yy
         System.out.println("Tool code: " + toolsRentalResponseDTO.getToolCode() + newLine +
                         "Tool type: " + toolsRentalResponseDTO.getToolType() + newLine +
                         "Tool brand: " + toolsRentalResponseDTO.getToolBrand() + newLine +
