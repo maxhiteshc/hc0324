@@ -1,25 +1,28 @@
 package com.toolsrental.demo.constants;
 
+import java.util.Arrays;
+import java.util.Optional;
+
 public enum ToolType {
 
     Chainsaw("Chainsaw",10.50,true),
     Ladder("Ladder",5.0,true),
     Jackhammer("Jackhammer",15.0,true);
 
-    private final String toolCode;
+    private final String toolType;
 
     private final double dailyRentalCharge;
 
     private final boolean isWeekendsChargable;
 
-    ToolType(String toolCode, double dailyRentalCharge, boolean isWeekendsChargable) {
-        this.toolCode = toolCode;
+    ToolType(String toolType, double dailyRentalCharge, boolean isWeekendsChargable) {
+        this.toolType = toolType;
         this.dailyRentalCharge = dailyRentalCharge;
         this.isWeekendsChargable = isWeekendsChargable;
     }
 
-    public String getToolCode() {
-        return toolCode;
+    public String getToolType() {
+        return toolType;
     }
 
     public double getDailyRentalCharge() {
@@ -28,5 +31,11 @@ public enum ToolType {
 
     public boolean isWeekendsChargable() {
         return isWeekendsChargable;
+    }
+
+    public static Optional<ToolType> getToolRentalByToolType(String value) {
+        return Arrays.stream(ToolType.values())
+                .filter(tooltype -> tooltype.toolType.equals(value))
+                .findFirst();
     }
 }

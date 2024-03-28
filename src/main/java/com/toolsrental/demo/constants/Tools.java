@@ -1,5 +1,8 @@
 package com.toolsrental.demo.constants;
 
+import java.util.Arrays;
+import java.util.Optional;
+
 public enum Tools {
 
     CHNS("CHNS","Chainsaw","Stihl"),
@@ -29,5 +32,11 @@ public enum Tools {
 
     public String getBrand() {
         return brand;
+    }
+
+    public static Optional<Tools> getToolsByToolCode(String value) {
+        return Arrays.stream(Tools.values())
+                .filter(tools -> tools.toolCode.equals(value))
+                .findFirst();
     }
 }
