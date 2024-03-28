@@ -28,15 +28,16 @@ public class ToolsRentalController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Autowired
+   /* @Autowired
     private ToolsRentalServiceImpl toolsRentalService;
-
+*/
     /*@Autowired
     ObjectMapper objectMapper;*/
 
     @PostMapping
     public ResponseEntity<ToolsRentalResponseDTO> checkout(ToolsRentalRequestDTO toolsRentalRequestDTO) throws URISyntaxException {
         // TODO: 28/03/24 Add validations on request parameters
+        ToolsRentalServiceImpl toolsRentalService = new ToolsRentalServiceImpl();
         ToolsRentalResponseDTO toolsRentalResponseDTO = toolsRentalService.checkout(toolsRentalRequestDTO);
         printRentalAgreement(toolsRentalResponseDTO);
         return ResponseEntity.ok(toolsRentalResponseDTO);
