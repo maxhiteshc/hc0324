@@ -49,7 +49,6 @@ public class ToolsRentalController {
         String newLine = System.getProperty("line.separator");
         String currency = "$";
         String percent = "%";
-        // TODO: 28/03/24  Format dates to // Date mm/dd/yy
         System.out.println("Tool code: " + toolsRentalResponseDTO.getToolCode() + newLine +
                         "Tool type: " + toolsRentalResponseDTO.getToolType() + newLine +
                         "Tool brand: " + toolsRentalResponseDTO.getToolBrand() + newLine +
