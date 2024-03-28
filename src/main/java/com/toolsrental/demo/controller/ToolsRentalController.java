@@ -36,7 +36,6 @@ public class ToolsRentalController {
 
     @PostMapping
     public ResponseEntity<ToolsRentalResponseDTO> checkout(ToolsRentalRequestDTO toolsRentalRequestDTO) throws IllegalArgumentException {
-        // TODO: 28/03/24 Add validations on request parameters
         ToolsRentalServiceImpl toolsRentalService = new ToolsRentalServiceImpl();
         ToolsRentalResponseDTO toolsRentalResponseDTO = toolsRentalService.checkout(toolsRentalRequestDTO);
         printRentalAgreement(toolsRentalResponseDTO);
