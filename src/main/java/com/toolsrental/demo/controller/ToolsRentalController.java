@@ -26,6 +26,7 @@ public class ToolsRentalController {
 
     @PostMapping
     public ResponseEntity<ToolsRentalResponseDTO> getAllProducts(ToolsRentalRequestDTO toolsRentalRequestDTO) throws URISyntaxException {
+        //// TODO: 28/03/24 Add validations on request parameters 
         ToolsRentalResponseDTO toolsRentalResponseDTO = toolsRentalService.checkout(toolsRentalRequestDTO));
         printRentalAgreement(toolsRentalResponseDTO);
         return ResponseEntity.ok(toolsRentalResponseDTO);
