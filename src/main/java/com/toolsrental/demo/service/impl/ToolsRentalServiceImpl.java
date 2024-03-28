@@ -15,7 +15,7 @@ public class ToolsRentalServiceImpl implements ToolsRentalService {
         ToolsRentalResponseDTO toolsRentalResponseDTO = new ToolsRentalResponseDTO();
         toolsRentalResponseDTO.setToolCode(toolsRentalRequestDTO.getToolCode());
 
-        Optional<Tools> tools = Tools.getToolsByToolCode(toolsRentalRequestDTO.getToolCode());
+        Tools tools = Tools.getToolsByToolCode(toolsRentalRequestDTO.getToolCode()).get();
         toolsRentalResponseDTO.setToolType(tools.getToolType());
         toolsRentalResponseDTO.setToolBrand(tools.getBrand());
 
@@ -26,7 +26,7 @@ public class ToolsRentalServiceImpl implements ToolsRentalService {
         LocalDate dueDate = checkoutDate.plusDays(toolsRentalRequestDTO.getRentalDaysCount());
         toolsRentalResponseDTO.setDueDate(dueDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 
-        Optional<ToolType> toolType = ToolType.getToolRentalByToolType(toolsRentalResponseDTO.getToolType());
+        ToolType toolType = ToolType.getToolRentalByToolType(toolsRentalResponseDTO.getToolType()).get();
         double dailyRentalCharge = toolType.getDailyRentalCharge();
         toolsRentalResponseDTO.setDailyRentalCharge(dailyRentalCharge);
 
