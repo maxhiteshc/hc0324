@@ -39,7 +39,7 @@ public class ToolsRentalServiceImpl implements ToolsRentalService {
         double preDiscountCharge = dailyRentalCharge * chargeDays;
         toolsRentalResponseDTO.setPreDiscountCharge(preDiscountCharge);
 
-        int discountPercent = toolsRentalResponseDTO.getDiscountPercent();
+        int discountPercent = toolsRentalRequestDTO.getDiscountPercent();
         toolsRentalResponseDTO.setDiscountPercent(discountPercent);
 
         //// TODO: 28/03/24 Round it to cents

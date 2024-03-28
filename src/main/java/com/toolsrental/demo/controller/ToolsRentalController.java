@@ -68,7 +68,11 @@ public class ToolsRentalController {
         ObjectMapper objectMapper = new ObjectMapper();
         ClassPathResource testFile = new ClassPathResource("test1.json");
         String checkoutRequest = StreamUtils.copyToString( testFile.getInputStream(), Charset.defaultCharset());
+        System.out.println("Input File:");
         System.out.println(checkoutRequest);
+
+
+        System.out.println();
         ToolsRentalRequestDTO toolsRentalRequestDTO = objectMapper.readValue(checkoutRequest, ToolsRentalRequestDTO.class);
 
         ToolsRentalController toolsRentalController = new ToolsRentalController();
