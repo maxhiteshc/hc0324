@@ -23,15 +23,15 @@ public class ToolsRentalResponseDTO {
 
     private String dueDate;
 
-    private float dailyRentalCharge;
+    private double dailyRentalCharge;
 
     private int chargeDays;
 
-    private float preDiscountCharge;
+    private double preDiscountCharge;
 
     private int discountPercent;
 
-    private float discountAmount;
+    private double discountAmount;
 
-    private float finalCharge;
+    private double finalCharge;
 }
