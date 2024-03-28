@@ -1,19 +1,26 @@
 package com.toolsrental.demo.controller;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.toolsrental.demo.dto.ToolsRentalRequestDTO;
 import com.toolsrental.demo.dto.ToolsRentalResponseDTO;
 import com.toolsrental.demo.service.impl.ToolsRentalServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URISyntaxException;
+import java.nio.charset.Charset;
 import java.util.Optional;
+
+
+/* NOTE THIS can be run from the main method for now at the bottom of the class */
 
 @RestController
 @RequestMapping("/v1/checkout")
@@ -24,10 +31,13 @@ public class ToolsRentalController {
     @Autowired
     private ToolsRentalServiceImpl toolsRentalService;
 
+    /*@Autowired
+    ObjectMapper objectMapper;*/
+
     @PostMapping
-    public ResponseEntity<ToolsRentalResponseDTO> getAllProducts(ToolsRentalRequestDTO toolsRentalRequestDTO) throws URISyntaxException {
+    public ResponseEntity<ToolsRentalResponseDTO> checkout(ToolsRentalRequestDTO toolsRentalRequestDTO) throws URISyntaxException {
         // TODO: 28/03/24 Add validations on request parameters
-        ToolsRentalResponseDTO toolsRentalResponseDTO = toolsRentalService.checkout(toolsRentalRequestDTO));
+        ToolsRentalResponseDTO toolsRentalResponseDTO = toolsRentalService.checkout(toolsRentalRequestDTO);
         printRentalAgreement(toolsRentalResponseDTO);
         return ResponseEntity.ok(toolsRentalResponseDTO);
 
@@ -51,6 +61,17 @@ public class ToolsRentalController {
                         "Discount percent: " + toolsRentalResponseDTO.getDiscountPercent() + percent + newLine +
                         "Discount amount: " + currency + toolsRentalResponseDTO.getDiscountAmount() + newLine +
                         "Final charge: " + currency + toolsRentalResponseDTO.getFinalCharge());
+    }
+
+    public static void main(String args[])  throws Exception {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ClassPathResource testFile = new ClassPathResource("mockJson/test1.json");
+        String checkoutRequest = StreamUtils.copyToString( testFile.getInputStream(), Charset.defaultCharset());
+        ToolsRentalRequestDTO toolsRentalRequestDTO = objectMapper.readValue(checkoutRequest, ToolsRentalRequestDTO.class);
+
+        ToolsRentalController toolsRentalController = new ToolsRentalController();
+        toolsRentalController.checkout(toolsRentalRequestDTO);
+
     }
 
 }

@@ -8,13 +8,14 @@ import com.toolsrental.demo.service.ToolsRentalService;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 public class ToolsRentalServiceImpl implements ToolsRentalService {
     public ToolsRentalResponseDTO checkout(ToolsRentalRequestDTO toolsRentalRequestDTO) {
         ToolsRentalResponseDTO toolsRentalResponseDTO = new ToolsRentalResponseDTO();
         toolsRentalResponseDTO.setToolCode(toolsRentalRequestDTO.getToolCode());
 
-        Tools tools = Tools.getToolsByToolCode(toolsRentalRequestDTO.getToolCode());
+        Optional<Tools> tools = Tools.getToolsByToolCode(toolsRentalRequestDTO.getToolCode());
         toolsRentalResponseDTO.setToolType(tools.getToolType());
         toolsRentalResponseDTO.setToolBrand(tools.getBrand());
 
@@ -25,7 +26,7 @@ public class ToolsRentalServiceImpl implements ToolsRentalService {
         LocalDate dueDate = checkoutDate.plusDays(toolsRentalRequestDTO.getRentalDaysCount());
         toolsRentalResponseDTO.setDueDate(dueDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 
-        ToolType toolType = ToolType.getToolRentalByToolType(toolsRentalResponseDTO.getToolType());
+        Optional<ToolType> toolType = ToolType.getToolRentalByToolType(toolsRentalResponseDTO.getToolType());
         double dailyRentalCharge = toolType.getDailyRentalCharge();
         toolsRentalResponseDTO.setDailyRentalCharge(dailyRentalCharge);
 
