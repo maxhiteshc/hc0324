@@ -22,7 +22,8 @@ public class ToolsRentalServiceImpl implements ToolsRentalService {
         toolsRentalResponseDTO.setRentalDaysCount(toolsRentalRequestDTO.getRentalDaysCount());
         toolsRentalResponseDTO.setCheckoutDate(toolsRentalRequestDTO.getCheckoutDate());
 
-        LocalDate checkoutDate = LocalDate.parse(toolsRentalRequestDTO.getCheckoutDate());
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate checkoutDate = LocalDate.parse(toolsRentalRequestDTO.getCheckoutDate(),df);
         LocalDate dueDate = checkoutDate.plusDays(toolsRentalRequestDTO.getRentalDaysCount());
         toolsRentalResponseDTO.setDueDate(dueDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 
