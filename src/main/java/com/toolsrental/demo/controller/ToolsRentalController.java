@@ -66,7 +66,7 @@ public class ToolsRentalController {
 
     public static void main(String args[])  throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
-        ClassPathResource testFile = new ClassPathResource("test1.json");
+        ClassPathResource testFile = new ClassPathResource("test2.json");
         String checkoutRequest = StreamUtils.copyToString( testFile.getInputStream(), Charset.defaultCharset());
         System.out.println("Input File:");
         System.out.println(checkoutRequest);
