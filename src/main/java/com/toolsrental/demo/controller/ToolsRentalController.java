@@ -68,15 +68,14 @@ public class ToolsRentalController {
         ObjectMapper objectMapper = new ObjectMapper();
         ClassPathResource testFile = new ClassPathResource("test2.json");
         String checkoutRequest = StreamUtils.copyToString( testFile.getInputStream(), Charset.defaultCharset());
-        System.out.println("Input File:");
-        System.out.println(checkoutRequest);
+        String newLine = System.getProperty("line.separator");
+        System.out.println("Input File:" + newLine + checkoutRequest +newLine);
 
-
-        System.out.println();
         ToolsRentalRequestDTO toolsRentalRequestDTO = objectMapper.readValue(checkoutRequest, ToolsRentalRequestDTO.class);
 
         ToolsRentalController toolsRentalController = new ToolsRentalController();
         try {
+            System.out.println("Output:" + newLine);
             toolsRentalController.checkout(toolsRentalRequestDTO);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
