@@ -35,7 +35,7 @@ public class ToolsRentalController {
     ObjectMapper objectMapper;*/
 
     @PostMapping
-    public ResponseEntity<ToolsRentalResponseDTO> checkout(ToolsRentalRequestDTO toolsRentalRequestDTO) throws URISyntaxException {
+    public ResponseEntity<ToolsRentalResponseDTO> checkout(ToolsRentalRequestDTO toolsRentalRequestDTO) throws IllegalArgumentException {
         // TODO: 28/03/24 Add validations on request parameters
         ToolsRentalServiceImpl toolsRentalService = new ToolsRentalServiceImpl();
         ToolsRentalResponseDTO toolsRentalResponseDTO = toolsRentalService.checkout(toolsRentalRequestDTO);
@@ -76,7 +76,11 @@ public class ToolsRentalController {
         ToolsRentalRequestDTO toolsRentalRequestDTO = objectMapper.readValue(checkoutRequest, ToolsRentalRequestDTO.class);
 
         ToolsRentalController toolsRentalController = new ToolsRentalController();
-        toolsRentalController.checkout(toolsRentalRequestDTO);
+        try {
+            toolsRentalController.checkout(toolsRentalRequestDTO);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
 
     }
 
