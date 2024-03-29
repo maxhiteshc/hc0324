@@ -82,7 +82,7 @@ public class ToolsRentalController {
         System.out.println("Input File:" + newLine + checkoutRequest +newLine);
         ObjectMapper objectMapper = new ObjectMapper();
         ToolsRentalRequestDTO toolsRentalRequestDTO = objectMapper.readValue(checkoutRequest, ToolsRentalRequestDTO.class);
-
+        System.out.println("--------------------------------------------------------------------------" + newLine);
         ToolsRentalController toolsRentalController = new ToolsRentalController();
         try {
             System.out.println("Output:" + newLine);
@@ -90,6 +90,8 @@ public class ToolsRentalController {
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
+        System.out.println("--------------------------------------------------------------------------" + newLine);
+        System.out.println("--------------------------------------------------------------------------" + newLine);
     }
 
 }
