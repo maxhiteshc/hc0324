@@ -89,7 +89,7 @@ public class ToolsRentalServiceImpl implements ToolsRentalService {
     private boolean hasLaborDay(LocalDate checkoutDate, LocalDate dueDate) {
         LocalDate laborMonth1stDay = LocalDate.of(checkoutDate.getYear(), 9, 1);
         LocalDate laborDayHoliday = laborMonth1stDay.with(firstInMonth(DayOfWeek.MONDAY));
-        return !laborDayHoliday.isBefore(checkoutDate) && !laborDayHoliday.isAfter(dueDate);;
+        return !laborDayHoliday.isBefore(checkoutDate) && !laborDayHoliday.isAfter(dueDate);
     }
 
     private boolean hasIndependenceDay(LocalDate checkoutDate, LocalDate dueDate) {
