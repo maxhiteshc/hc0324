@@ -39,12 +39,11 @@ public class ToolsRentalServiceImpl implements ToolsRentalService {
         toolsRentalResponseDTO.setDailyRentalCharge(dailyRentalCharge);
 
         //// TODO: 28/03/24 Subtract non-chargeable days for holidays and weekends if applicable
-        int holidays = getHolidaysCount(checkoutDate, dueDate);
         long weekends = 0;
         if(!isWeekendsChargeable){
             weekends = getWeekendsCount(checkoutDate, dueDate);
         }
-        long chargeDays = toolsRentalRequestDTO.getRentalDaysCount() - holidays - weekends;
+        long chargeDays = toolsRentalRequestDTO.getRentalDaysCount() - getHolidaysCount(checkoutDate, dueDate) - weekends;
         toolsRentalResponseDTO.setChargeDays(chargeDays);
 
         double preDiscountCharge = dailyRentalCharge * chargeDays;
