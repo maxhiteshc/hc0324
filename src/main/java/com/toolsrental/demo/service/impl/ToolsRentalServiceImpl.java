@@ -79,7 +79,14 @@ public class ToolsRentalServiceImpl implements ToolsRentalService {
         if(hasIndependenceDay(checkoutDate,dueDate)) {
             holidays++;
         }
+        if(hasLaborDay(checkoutDate,dueDate)){
+            holidays++;
+        }
         return holidays;
+    }
+
+    private boolean hasLaborDay(LocalDate checkoutDate, LocalDate dueDate) {
+        return false;
     }
 
     private boolean hasIndependenceDay(LocalDate checkoutDate, LocalDate dueDate) {
