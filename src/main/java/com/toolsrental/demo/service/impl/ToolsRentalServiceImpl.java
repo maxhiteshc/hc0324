@@ -71,7 +71,7 @@ public class ToolsRentalServiceImpl implements ToolsRentalService {
     private long getWeekendsCount(LocalDate checkoutDate, LocalDate dueDate) {
         return checkoutDate.datesUntil(dueDate)
                 .map(LocalDate::getDayOfWeek)
-                .filter(day -> !Arrays.asList(DayOfWeek.SATURDAY, DayOfWeek.SUNDAY).contains(day))
+                .filter(day -> Arrays.asList(DayOfWeek.SATURDAY, DayOfWeek.SUNDAY).contains(day))
                 .count();
     }
 
