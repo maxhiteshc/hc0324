@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.nio.charset.Charset;
 
 
@@ -37,8 +38,6 @@ public class ToolsRentalController {
         ToolsRentalResponseDTO toolsRentalResponseDTO = toolsRentalService.checkout(toolsRentalRequestDTO);
         printRentalAgreement(toolsRentalResponseDTO);
         return ResponseEntity.ok(toolsRentalResponseDTO);
-
-        // TODO: 28/03/24 Junits to pass Six Test cases provided
     }
 
     private void printRentalAgreement(ToolsRentalResponseDTO toolsRentalResponseDTO) {
@@ -60,12 +59,28 @@ public class ToolsRentalController {
     }
 
     public static void main(String[] args)  throws Exception {
-        ObjectMapper objectMapper = new ObjectMapper();
-        ClassPathResource testFile = new ClassPathResource("test3.json");
+
+        // Test Case 1
+        checkout("test1.json");
+        // Test Case 2
+        checkout("test2.json");
+        // Test Case 3
+        checkout("test3.json");
+        // Test Case 4
+        checkout("test4.json");
+        // Test Case 5
+        checkout("test5.json");
+        // Test Case 6
+        checkout("test6.json");
+
+    }
+
+    private static void checkout(String testFilePath) throws IOException {
+        ClassPathResource testFile = new ClassPathResource(testFilePath);
         String checkoutRequest = StreamUtils.copyToString( testFile.getInputStream(), Charset.defaultCharset());
         String newLine = System.getProperty("line.separator");
         System.out.println("Input File:" + newLine + checkoutRequest +newLine);
-
+        ObjectMapper objectMapper = new ObjectMapper();
         ToolsRentalRequestDTO toolsRentalRequestDTO = objectMapper.readValue(checkoutRequest, ToolsRentalRequestDTO.class);
 
         ToolsRentalController toolsRentalController = new ToolsRentalController();
@@ -75,7 +90,6 @@ public class ToolsRentalController {
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
-
     }
 
 }
