@@ -61,7 +61,7 @@ public class ToolsRentalController {
 
     public static void main(String[] args)  throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
-        ClassPathResource testFile = new ClassPathResource("test2.json");
+        ClassPathResource testFile = new ClassPathResource("test3.json");
         String checkoutRequest = StreamUtils.copyToString( testFile.getInputStream(), Charset.defaultCharset());
         String newLine = System.getProperty("line.separator");
         System.out.println("Input File:" + newLine + checkoutRequest +newLine);

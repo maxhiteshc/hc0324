@@ -39,7 +39,6 @@ public class ToolsRentalServiceImpl implements ToolsRentalService {
         boolean isWeekendsChargeable = toolType.isWeekendsChargable();
         toolsRentalResponseDTO.setDailyRentalCharge(dailyRentalCharge);
 
-        //// TODO: 28/03/24 Subtract non-chargeable days for holidays and weekends if applicable
         long weekends = 0;
         if(!isWeekendsChargeable){
             weekends = getWeekendsCount(checkoutDate, dueDate);
@@ -58,7 +57,7 @@ public class ToolsRentalServiceImpl implements ToolsRentalService {
         }
         toolsRentalResponseDTO.setDiscountPercent(discountPercent);
 
-        //// TODO: 28/03/24 Round it to cents
+        // TODO: 28/03/24 Round it to cents
         double discountAmount = (discountPercent*preDiscountCharge)/100;
         toolsRentalResponseDTO.setDiscountAmount(discountAmount);
 
