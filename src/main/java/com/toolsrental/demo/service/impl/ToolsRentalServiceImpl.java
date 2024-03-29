@@ -47,7 +47,7 @@ public class ToolsRentalServiceImpl implements ToolsRentalService {
         toolsRentalResponseDTO.setChargeDays(chargeDays);
 
         double preDiscountChargeActual = dailyRentalCharge * chargeDays;
-        double preDiscountCharge = (double) Math.round(preDiscountChargeActual * 100) / 100;
+        double preDiscountCharge = (double) Math.round(preDiscountChargeActual * 100.0) / 100.0;
         toolsRentalResponseDTO.setPreDiscountCharge(preDiscountCharge);
 
         int discountPercent = toolsRentalRequestDTO.getDiscountPercent();
@@ -58,8 +58,8 @@ public class ToolsRentalServiceImpl implements ToolsRentalService {
         }
         toolsRentalResponseDTO.setDiscountPercent(discountPercent);
 
-        double discountAmountActual = (discountPercent*preDiscountCharge)/100;
-        double discountAmount = (double) Math.round(discountAmountActual * 100) / 100;
+        double discountAmountActual = (discountPercent*preDiscountCharge)/100.0;
+        double discountAmount = (double) Math.round(discountAmountActual * 100.0) / 100.0;
         toolsRentalResponseDTO.setDiscountAmount(discountAmount);
 
         double finalCharge = preDiscountCharge - discountAmount;
