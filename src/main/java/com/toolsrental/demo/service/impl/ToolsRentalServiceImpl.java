@@ -9,6 +9,7 @@ import com.toolsrental.demo.service.ToolsRentalService;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import static java.time.temporal.TemporalAdjusters.firstInMonth;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoField;
 import java.util.Arrays;
@@ -86,7 +87,9 @@ public class ToolsRentalServiceImpl implements ToolsRentalService {
     }
 
     private boolean hasLaborDay(LocalDate checkoutDate, LocalDate dueDate) {
-        return false;
+        LocalDate laborMonth1stDay = LocalDate.of(checkoutDate.getYear(), 9, 1);
+        LocalDate laborDayHoliday = laborMonth1stDay.with(firstInMonth(DayOfWeek.MONDAY));
+        return !laborDayHoliday.isBefore(checkoutDate) && !laborDayHoliday.isAfter(dueDate);;
     }
 
     private boolean hasIndependenceDay(LocalDate checkoutDate, LocalDate dueDate) {
