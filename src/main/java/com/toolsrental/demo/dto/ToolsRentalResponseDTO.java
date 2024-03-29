@@ -25,7 +25,7 @@ public class ToolsRentalResponseDTO {
 
     private double dailyRentalCharge;
 
-    private int chargeDays;
+    private long chargeDays;
 
     private double preDiscountCharge;
 

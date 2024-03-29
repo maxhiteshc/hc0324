@@ -5,14 +5,13 @@ import com.toolsrental.demo.constants.Tools;
 import com.toolsrental.demo.dto.ToolsRentalRequestDTO;
 import com.toolsrental.demo.dto.ToolsRentalResponseDTO;
 import com.toolsrental.demo.service.ToolsRentalService;
-import jdk.jshell.spi.ExecutionControl;
-import org.springframework.validation.method.MethodValidationException;
+
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoField;
-import java.util.Optional;
+import java.util.Arrays;
 
 public class ToolsRentalServiceImpl implements ToolsRentalService {
     public ToolsRentalResponseDTO checkout(ToolsRentalRequestDTO toolsRentalRequestDTO) throws IllegalArgumentException {
@@ -41,7 +40,11 @@ public class ToolsRentalServiceImpl implements ToolsRentalService {
 
         //// TODO: 28/03/24 Subtract non-chargeable days for holidays and weekends if applicable
         int holidays = getHolidaysCount(checkoutDate, dueDate);
-        int chargeDays = toolsRentalRequestDTO.getRentalDaysCount() - holidays;
+        long weekends = 0;
+        if(!isWeekendsChargeable){
+            weekends = getWeekendsCount(checkoutDate, dueDate);
+        }
+        long chargeDays = toolsRentalRequestDTO.getRentalDaysCount() - holidays - weekends;
         toolsRentalResponseDTO.setChargeDays(chargeDays);
 
         double preDiscountCharge = dailyRentalCharge * chargeDays;
@@ -65,17 +68,23 @@ public class ToolsRentalServiceImpl implements ToolsRentalService {
         return toolsRentalResponseDTO;
     }
 
+    private long getWeekendsCount(LocalDate checkoutDate, LocalDate dueDate) {
+        return checkoutDate.datesUntil(dueDate)
+                .map(LocalDate::getDayOfWeek)
+                .filter(day -> !Arrays.asList(DayOfWeek.SATURDAY, DayOfWeek.SUNDAY).contains(day))
+                .count();
+    }
+
     private int getHolidaysCount(LocalDate checkoutDate, LocalDate dueDate) {
         int holidays = 0;
-        if(hasIndependenceDay( checkoutDate,  dueDate)) {
+        if(hasIndependenceDay(checkoutDate,dueDate)) {
             holidays++;
         }
-
-
+        return holidays;
     }
 
     private boolean hasIndependenceDay(LocalDate checkoutDate, LocalDate dueDate) {
-        LocalDate independenceDay = LocalDate.of(checkoutDate.getYear(), 07, 04);
+        LocalDate independenceDay = LocalDate.of(checkoutDate.getYear(), 7, 4);
         LocalDate independenceDayHoliday;
         DayOfWeek day = DayOfWeek.of(independenceDay.get(ChronoField.DAY_OF_WEEK));
         if(day == DayOfWeek.SATURDAY) {
@@ -85,9 +94,6 @@ public class ToolsRentalServiceImpl implements ToolsRentalService {
         } else {
             independenceDayHoliday = independenceDay;
         }
-        if(!independenceDayHoliday.isBefore(checkoutDate) && !independenceDayHoliday.isAfter(dueDate)) {
-            return true;
-        }
-        return false;
+        return !independenceDayHoliday.isBefore(checkoutDate) && !independenceDayHoliday.isAfter(dueDate);
     }
 }
