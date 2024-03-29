@@ -28,9 +28,10 @@ public class ToolsRentalController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-   /* @Autowired
+    /* @Autowired
     private ToolsRentalServiceImpl toolsRentalService;
-*/
+    */
+
     /*@Autowired
     ObjectMapper objectMapper;*/
 

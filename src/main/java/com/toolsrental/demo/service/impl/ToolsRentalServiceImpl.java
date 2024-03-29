@@ -8,8 +8,10 @@ import com.toolsrental.demo.service.ToolsRentalService;
 import jdk.jshell.spi.ExecutionControl;
 import org.springframework.validation.method.MethodValidationException;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoField;
 import java.util.Optional;
 
 public class ToolsRentalServiceImpl implements ToolsRentalService {
@@ -34,11 +36,12 @@ public class ToolsRentalServiceImpl implements ToolsRentalService {
 
         ToolType toolType = ToolType.getToolRentalByToolType(toolsRentalResponseDTO.getToolType()).get();
         double dailyRentalCharge = toolType.getDailyRentalCharge();
+        boolean isWeekendsChargeable = toolType.isWeekendsChargable();
         toolsRentalResponseDTO.setDailyRentalCharge(dailyRentalCharge);
 
         //// TODO: 28/03/24 Subtract non-chargeable days for holidays and weekends if applicable
-
-        int chargeDays = toolsRentalRequestDTO.getRentalDaysCount();
+        int holidays = getHolidaysCount(checkoutDate, dueDate);
+        int chargeDays = toolsRentalRequestDTO.getRentalDaysCount() - holidays;
         toolsRentalResponseDTO.setChargeDays(chargeDays);
 
         double preDiscountCharge = dailyRentalCharge * chargeDays;
@@ -60,5 +63,31 @@ public class ToolsRentalServiceImpl implements ToolsRentalService {
         toolsRentalResponseDTO.setFinalCharge(finalCharge);
 
         return toolsRentalResponseDTO;
+    }
+
+    private int getHolidaysCount(LocalDate checkoutDate, LocalDate dueDate) {
+        int holidays = 0;
+        if(hasIndependenceDay( checkoutDate,  dueDate)) {
+            holidays++;
+        }
+
+
+    }
+
+    private boolean hasIndependenceDay(LocalDate checkoutDate, LocalDate dueDate) {
+        LocalDate independenceDay = LocalDate.of(checkoutDate.getYear(), 07, 04);
+        LocalDate independenceDayHoliday;
+        DayOfWeek day = DayOfWeek.of(independenceDay.get(ChronoField.DAY_OF_WEEK));
+        if(day == DayOfWeek.SATURDAY) {
+            independenceDayHoliday = independenceDay.minusDays(1);
+        } else if(day == DayOfWeek.SUNDAY){
+            independenceDayHoliday = independenceDay.plusDays(1);
+        } else {
+            independenceDayHoliday = independenceDay;
+        }
+        if(!independenceDayHoliday.isBefore(checkoutDate) && !independenceDayHoliday.isAfter(dueDate)) {
+            return true;
+        }
+        return false;
     }
 }
