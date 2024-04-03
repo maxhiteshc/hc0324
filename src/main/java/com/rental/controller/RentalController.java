@@ -44,7 +44,8 @@ public class RentalController {
         String newLine = System.getProperty("line.separator");
         String currency = "$";
         String percent = "%";
-        System.out.println("Tool code: " + rentalResponseDTO.getToolCode() + newLine +
+        System.out.println("Rental Agreement: " + newLine +
+                        "Tool code: " + rentalResponseDTO.getToolCode() + newLine +
                         "Tool type: " + rentalResponseDTO.getToolType() + newLine +
                         "Tool brand: " + rentalResponseDTO.getToolBrand() + newLine +
                         "Rental days: " + rentalResponseDTO.getRentalDaysCount() + newLine +
@@ -84,10 +85,9 @@ public class RentalController {
         RentalRequestDTO rentalRequestDTO = objectMapper.readValue(checkoutRequest, RentalRequestDTO.class);
         RentalController rentalController = new RentalController();
         try {
-            System.out.println("Rental Agreement:");
             rentalController.checkout(rentalRequestDTO);
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            System.out.println(e.getMessage()+newLine);
         }
     }
 
