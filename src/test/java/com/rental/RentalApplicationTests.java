@@ -1,10 +1,10 @@
-package com.toolsrental.demo;
+package com.rental;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ToolsRentalApplicationTests {
+class RentalApplicationTests {
 
 	@Test
 	void contextLoads() {

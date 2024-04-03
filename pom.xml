@@ -8,11 +8,11 @@
 		<version>3.2.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.toolsrental</groupId>
+	<groupId>com.rental</groupId>
 	<artifactId>hc0324</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Tools Rental</name>
-	<description>Demo project for Spring Boot Tools Rental</description>
+	<name>Rental Application</name>
+	<description>Demo project for Spring Boot Rental Application</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>

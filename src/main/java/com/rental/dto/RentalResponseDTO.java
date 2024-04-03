@@ -1,4 +1,4 @@
-package com.toolsrental.demo.dto;
+package com.rental.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ToolsRentalResponseDTO {
+public class RentalResponseDTO {
 
     private String toolCode;
 

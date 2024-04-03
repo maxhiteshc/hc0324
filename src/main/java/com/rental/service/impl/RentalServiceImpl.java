@@ -1,10 +1,10 @@
-package com.toolsrental.demo.service.impl;
+package com.rental.service.impl;
 
-import com.toolsrental.demo.constants.ToolType;
-import com.toolsrental.demo.constants.Tools;
-import com.toolsrental.demo.dto.ToolsRentalRequestDTO;
-import com.toolsrental.demo.dto.ToolsRentalResponseDTO;
-import com.toolsrental.demo.service.ToolsRentalService;
+import com.rental.constants.ToolType;
+import com.rental.constants.Tools;
+import com.rental.dto.RentalRequestDTO;
+import com.rental.dto.RentalResponseDTO;
+import com.rental.service.RentalService;
 
 
 import java.time.DayOfWeek;
@@ -14,58 +14,58 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoField;
 import java.util.Arrays;
 
-public class ToolsRentalServiceImpl implements ToolsRentalService {
-    public ToolsRentalResponseDTO checkout(ToolsRentalRequestDTO toolsRentalRequestDTO) throws IllegalArgumentException {
-        ToolsRentalResponseDTO toolsRentalResponseDTO = new ToolsRentalResponseDTO();
-        toolsRentalResponseDTO.setToolCode(toolsRentalRequestDTO.getToolCode());
+public class RentalServiceImpl implements RentalService {
+    public RentalResponseDTO checkout(RentalRequestDTO rentalRequestDTO) throws IllegalArgumentException {
+        RentalResponseDTO rentalResponseDTO = new RentalResponseDTO();
+        rentalResponseDTO.setToolCode(rentalRequestDTO.getToolCode());
 
-        Tools tools = Tools.getToolsByToolCode(toolsRentalRequestDTO.getToolCode()).get();
-        toolsRentalResponseDTO.setToolType(tools.getToolType());
-        toolsRentalResponseDTO.setToolBrand(tools.getBrand());
+        Tools tools = Tools.getToolsByToolCode(rentalRequestDTO.getToolCode()).get();
+        rentalResponseDTO.setToolType(tools.getToolType());
+        rentalResponseDTO.setToolBrand(tools.getBrand());
 
-        if(toolsRentalRequestDTO.getRentalDaysCount() < 1 ) {
+        if(rentalRequestDTO.getRentalDaysCount() < 1 ) {
             throw new IllegalArgumentException("Rental day count is not 1 or greater");
         }
-        toolsRentalResponseDTO.setRentalDaysCount(toolsRentalRequestDTO.getRentalDaysCount());
-        toolsRentalResponseDTO.setCheckoutDate(toolsRentalRequestDTO.getCheckoutDate());
+        rentalResponseDTO.setRentalDaysCount(rentalRequestDTO.getRentalDaysCount());
+        rentalResponseDTO.setCheckoutDate(rentalRequestDTO.getCheckoutDate());
 
         DateTimeFormatter df = DateTimeFormatter.ofPattern("MM/dd/yy");
-        LocalDate checkoutDate = LocalDate.parse(toolsRentalRequestDTO.getCheckoutDate(),df);
-        LocalDate dueDate = checkoutDate.plusDays(toolsRentalRequestDTO.getRentalDaysCount());
-        toolsRentalResponseDTO.setDueDate(dueDate.format(DateTimeFormatter.ofPattern("MM/dd/yy")));
+        LocalDate checkoutDate = LocalDate.parse(rentalRequestDTO.getCheckoutDate(),df);
+        LocalDate dueDate = checkoutDate.plusDays(rentalRequestDTO.getRentalDaysCount());
+        rentalResponseDTO.setDueDate(dueDate.format(DateTimeFormatter.ofPattern("MM/dd/yy")));
 
-        ToolType toolType = ToolType.getToolRentalByToolType(toolsRentalResponseDTO.getToolType()).get();
+        ToolType toolType = ToolType.getToolRentalByToolType(rentalResponseDTO.getToolType()).get();
         double dailyRentalCharge = toolType.getDailyRentalCharge();
         boolean isWeekendsChargeable = toolType.isWeekendsChargable();
-        toolsRentalResponseDTO.setDailyRentalCharge(dailyRentalCharge);
+        rentalResponseDTO.setDailyRentalCharge(dailyRentalCharge);
 
         long weekends = 0;
         if(!isWeekendsChargeable){
             weekends = getWeekendsCount(checkoutDate, dueDate);
         }
-        long chargeDays = toolsRentalRequestDTO.getRentalDaysCount() - getHolidaysCount(checkoutDate, dueDate) - weekends;
-        toolsRentalResponseDTO.setChargeDays(chargeDays);
+        long chargeDays = rentalRequestDTO.getRentalDaysCount() - getHolidaysCount(checkoutDate, dueDate) - weekends;
+        rentalResponseDTO.setChargeDays(chargeDays);
 
         double preDiscountChargeActual = dailyRentalCharge * chargeDays;
         double preDiscountCharge = (double) Math.round(preDiscountChargeActual * 100.0) / 100.0;
-        toolsRentalResponseDTO.setPreDiscountCharge(preDiscountCharge);
+        rentalResponseDTO.setPreDiscountCharge(preDiscountCharge);
 
-        int discountPercent = toolsRentalRequestDTO.getDiscountPercent();
+        int discountPercent = rentalRequestDTO.getDiscountPercent();
 
 
         if(discountPercent < 0 || discountPercent > 100 ) {
             throw new IllegalArgumentException("Discount percent is not in the range 0-100");
         }
-        toolsRentalResponseDTO.setDiscountPercent(discountPercent);
+        rentalResponseDTO.setDiscountPercent(discountPercent);
 
         double discountAmountActual = (discountPercent*preDiscountCharge)/100.0;
         double discountAmount = (double) Math.round(discountAmountActual * 100.0) / 100.0;
-        toolsRentalResponseDTO.setDiscountAmount(discountAmount);
+        rentalResponseDTO.setDiscountAmount(discountAmount);
 
         double finalCharge = preDiscountCharge - discountAmount;
-        toolsRentalResponseDTO.setFinalCharge(finalCharge);
+        rentalResponseDTO.setFinalCharge(finalCharge);
 
-        return toolsRentalResponseDTO;
+        return rentalResponseDTO;
     }
 
     private long getWeekendsCount(LocalDate checkoutDate, LocalDate dueDate) {

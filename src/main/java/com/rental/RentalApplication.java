@@ -1,13 +1,13 @@
-package com.toolsrental.demo;
+package com.rental;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ToolsRentalApplication {
+public class RentalApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ToolsRentalApplication.class, args);
+		SpringApplication.run(RentalApplication.class, args);
 	}
 
 }

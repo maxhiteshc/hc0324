@@ -1,1 +1,1 @@
-Tool Rental application.
+Rental Application.

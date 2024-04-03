@@ -1,4 +1,4 @@
-package com.toolsrental.demo.constants;
+package com.rental.constants;
 
 public enum Holidays {
     INDEPENDENCE_DAY,

@@ -1,4 +1,4 @@
-package com.toolsrental.demo.constants;
+package com.rental.constants;
 
 import java.util.Arrays;
 import java.util.Optional;
